@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &434071264705348347
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5834344356275281813}
+  m_Layer: 0
+  m_Name: FirePos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5834344356275281813
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 434071264705348347}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5917455251725076046}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1092742767246341860
 GameObject:
   m_ObjectHideFlags: 0
@@ -79,6 +110,7 @@ GameObject:
   - component: {fileID: 5679978291912714880}
   - component: {fileID: 6052330001358897184}
   - component: {fileID: 5028851689196119120}
+  - component: {fileID: 7101353756221315290}
   - component: {fileID: 7511065343777472042}
   m_Layer: 0
   m_Name: Player
@@ -116,7 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2067266573
+  GlobalObjectIdHash: 2303313442
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -210,6 +242,25 @@ MonoBehaviour:
   _bodyTrm: {fileID: 7528539197593762161}
   _movementSpeed: 6
   _turningSpeed: 180
+--- !u!114 &7101353756221315290
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224577218351814811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90879bbac3ee284478ed8674c24a86a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerInput: {fileID: 6052330001358897184}
+  _firePosTrm: {fileID: 5834344356275281813}
+  _serverProjectilePrefab: {fileID: 578154136161568354, guid: a83e1e6774f052b478828f6ca16b020e, type: 3}
+  _clientProjectilePrefab: {fileID: 8676790216057352560, guid: 5ca8edf07e14fca458d82b773e8dd76c, type: 3}
+  _playerCollider: {fileID: 8241715971716937837}
+  _projectileSpeed: 30
+  _fireCooltime: 1
 --- !u!50 &7511065343777472042
 Rigidbody2D:
   serializedVersion: 4
@@ -513,7 +564,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.44, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5834344356275281813}
   m_Father: {fileID: 463001846724835574}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3675957207347758171
