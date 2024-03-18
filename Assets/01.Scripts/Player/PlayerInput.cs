@@ -7,11 +7,18 @@ public class PlayerInput : MonoBehaviour
 {
     public event Action<Vector2> OnMovementEvent;
     public event Action OnFireEvent;
+    public Vector2 AimPosition { get; private set; }
     
     private void Update()
     {
         CheckMovementInput();
         CheckFireInput();
+        CheckMousePosition();
+    }
+
+    private void CheckMousePosition()
+    {
+        AimPosition = Input.mousePosition;
     }
 
     private void CheckMovementInput()
