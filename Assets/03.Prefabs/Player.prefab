@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 3828023452747917492}
   - component: {fileID: 7132656149861403441}
   - component: {fileID: 5297348420500896234}
+  - component: {fileID: 5679978291912714880}
   - component: {fileID: 6052330001358897184}
   - component: {fileID: 5028851689196119120}
   - component: {fileID: 7511065343777472042}
@@ -115,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2303313442
+  GlobalObjectIdHash: 2067266573
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -167,6 +168,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80d7c879794dfda4687da0e400131852, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5679978291912714880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1224577218351814811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d410cae19fc724aa7f3caf7d169191, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerInput: {fileID: 6052330001358897184}
+  _turretTrm: {fileID: 463001846724835574}
 --- !u!114 &6052330001358897184
 MonoBehaviour:
   m_ObjectHideFlags: 0
