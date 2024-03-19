@@ -18,7 +18,6 @@ public class PlayerMovement : NetworkBehaviour
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        _playerInput.OnMovementEvent += HandleMovementEvent;
     }
 
     public override void OnNetworkSpawn()
