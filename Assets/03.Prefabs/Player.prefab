@@ -136,6 +136,7 @@ Transform:
   m_Children:
   - {fileID: 8685156482855487169}
   - {fileID: 463001846724835574}
+  - {fileID: 8909510236183244498}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3828023452747917492
@@ -150,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3394469437
+  GlobalObjectIdHash: 2303313442
   InScenePlacedSourceGlobalObjectIdHash: 1846377468
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -263,6 +264,21 @@ MonoBehaviour:
   _playerCollider: {fileID: 8241715971716937837}
   _projectileSpeed: 30
   _fireCooltime: 1
+  OnFireEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4867267334664341152}
+        m_TargetAssemblyTypeName: FeedbackPlayer, Assembly-CSharp
+        m_MethodName: PlayFeedback
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!50 &7511065343777472042
 Rigidbody2D:
   serializedVersion: 4
@@ -290,6 +306,82 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!1 &1306667535485168579
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8909510236183244498}
+  - component: {fileID: 4867267334664341152}
+  - component: {fileID: 4370384475804955714}
+  - component: {fileID: 4851248604774242858}
+  m_Layer: 0
+  m_Name: ShootFeedback
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8909510236183244498
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306667535485168579}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3386493508521476665}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4867267334664341152
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306667535485168579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4017a82a8ec8087419499f38cfecd93e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4370384475804955714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306667535485168579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e8b610af1729264f9057d976ca9faf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _muzzleFlash: {fileID: 2140678080043461336}
+  _muzzleLight: {fileID: 8238875907821734184}
+  _turnOnTime: 0.08
+  _defaultState: 0
+--- !u!114 &4851248604774242858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306667535485168579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8bd42726e6660048a17b00fa87b374e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetTrm: {fileID: 5917455251725076046}
+  _recoilPower: 0.2
 --- !u!1 &1687928086204105015
 GameObject:
   m_ObjectHideFlags: 0
@@ -398,7 +490,7 @@ SpriteRenderer:
   m_SortingLayer: 3
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 1a838243856331f4681c559527ad5846, type: 3}
-  m_Color: {r: 0.32597592, g: 0.32597592, b: 0.84276724, a: 1}
+  m_Color: {r: 0.84276724, g: 0.84276724, b: 0.84276724, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

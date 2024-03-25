@@ -1,5 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ProjectileLauncher : NetworkBehaviour
 {
@@ -17,6 +18,8 @@ public class ProjectileLauncher : NetworkBehaviour
 
     private bool _shouldFire;
     private float _prevFireTime;
+
+    public UnityEvent OnFireEvent;
 
     public override void OnNetworkSpawn()
     {
@@ -53,6 +56,8 @@ public class ProjectileLauncher : NetworkBehaviour
 
         Rigidbody2D rigidbody = projectile.GetComponent<Rigidbody2D>();
         rigidbody.velocity = projectile.transform.up * _projectileSpeed;
+        
+        OnFireEvent?.Invoke();
     }
 
     [ServerRpc]
