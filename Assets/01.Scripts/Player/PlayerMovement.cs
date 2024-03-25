@@ -42,7 +42,7 @@ public class PlayerMovement : NetworkBehaviour
         if (!IsOwner) return;
 
         float zRotation = _movementInput.x * -_turningSpeed * Time.deltaTime;
-        transform.Rotate(0, 0,  zRotation);
+        _bodyTrm.Rotate(0, 0,  zRotation);
     }
 
     private void FixedUpdate()

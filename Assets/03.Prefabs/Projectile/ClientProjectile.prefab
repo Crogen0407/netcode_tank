@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1658122432478820854, guid: 5cdf93487ff5eee47896618c664df800, type: 3}
       propertyPath: m_Name
-      value: ProjectileBase Variant
+      value: ClientProjectile
       objectReference: {fileID: 0}
     - target: {fileID: 1742239259559390265, guid: 5cdf93487ff5eee47896618c664df800, type: 3}
       propertyPath: m_LocalPosition.x
@@ -51,6 +51,10 @@ PrefabInstance:
     - target: {fileID: 1742239259559390265, guid: 5cdf93487ff5eee47896618c664df800, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8180803848626448587, guid: 5cdf93487ff5eee47896618c664df800, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -31,7 +31,5 @@ public class GunRecoilFeedback : Feedback
         Sequence seq = DOTween.Sequence();
         seq.Append(_targetTrm.DOLocalMoveY(current - _recoilPower, 0.1f));
         seq.Append(_targetTrm.DOLocalMoveY(current, 0.1f));
-        
-        
     }
 }

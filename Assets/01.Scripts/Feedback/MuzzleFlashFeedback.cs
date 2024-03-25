@@ -12,19 +12,19 @@ public class MuzzleFlashFeedback : Feedback
     
     public override void CreateFeedback()
     {
+        StartCoroutine(ActiveCoroutine());
+    }
+
+    public override void CompleteFeedback()
+    {
         StopAllCoroutines();
         _muzzleFlash.SetActive(_defaultState);
         _muzzleLight.gameObject.SetActive(_defaultState);
     }
 
-    public override void CompleteFeedback()
-    {
-        StartCoroutine(ActiveCoroutine());
-    }
-
     private IEnumerator ActiveCoroutine()
     {
-        _muzzleLight.gameObject.SetActive(true);
+        _muzzleLight.gameObject.SetActive(true);    
         _muzzleFlash.SetActive(true);
         yield return new WaitForSeconds(_turnOnTime);
         _muzzleLight.gameObject.SetActive(false);
