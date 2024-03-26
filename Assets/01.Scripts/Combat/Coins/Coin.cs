@@ -1,13 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using Unity.Netcode;
 using UnityEngine;
 
 public abstract class Coin : NetworkBehaviour
 {
-
     protected SpriteRenderer _spriteRenderer;
 
     protected CircleCollider2D _collider2D;
@@ -27,9 +23,6 @@ public abstract class Coin : NetworkBehaviour
 
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _collider2D = GetComponent<CircleCollider2D>();
-        
-        
-
     }
 
     public override void OnNetworkSpawn()
@@ -56,10 +49,12 @@ public abstract class Coin : NetworkBehaviour
             mat.SetFloat(_viewOffsetHash, 0); //0부터 시작
             float coinVisibleTime = 1.5f;
 
-            _viewTween = DOTween.To(
-                () => mat.GetFloat(_viewOffsetHash),
-                value => mat.SetFloat(_viewOffsetHash, value),
-                1.1f, coinVisibleTime);
+            // _viewTween = DOTween.To(
+            //     () => mat.GetFloat(_viewOffsetHash),
+            //     value => mat.SetFloat(_viewOffsetHash, value),
+            //     1.1f, coinVisibleTime);
+            
+            mat.DOFloat(1.1f, _viewOffsetHash, coinVisibleTime);
         }
     }
 

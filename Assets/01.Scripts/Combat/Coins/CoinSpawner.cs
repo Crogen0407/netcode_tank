@@ -1,14 +1,13 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class CoinSpawner : NetworkBehaviour
 {
     [Header("Reference")] 
     [SerializeField] private ReSpawnCoin _coinPrefab;
+    [SerializeField] private DecalCirlce _decalCirlce;
 
     [Header("Setting values")] 
     [SerializeField] private int _maxCoins = 30; // 최대 30개씩 코인 생성
@@ -111,12 +110,25 @@ public class CoinSpawner : NetworkBehaviour
 
             yield return new WaitForSeconds(3f);
         }
+
+        _isSpawning = false;
+        DecalCircleCloseClientRpc();
     }
 
     [ClientRpc]
     private void CountDownClientRpc(int sec, int pointIndex, int coinCount)
     {
+        if (_decalCirlce.showDecal == false)
+        {
+            _decalCirlce.OpenCircle(_spawnPointList[pointIndex].position, _spawnRadius);
+        }
         Debug.Log($"{pointIndex} 번 지점에서 {sec}초 후 {coinCount}개의 코인이 생성됩니다.");
     }
 
+    [ClientRpc]
+    private void DecalCircleCloseClientRpc()
+    {
+        _decalCirlce.CloseCircle();
+    }
+    
 }
