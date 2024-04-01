@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class ClientSingleton : MonoBehaviour
@@ -21,5 +22,13 @@ public class ClientSingleton : MonoBehaviour
 
             return _instance;
         }
+    }
+    
+    public ClientGameManager GameManager { get; set; }
+
+    public async Task CreateClient()
+    {
+        GameManager = new ClientGameManager();
+        await GameManager.InitAsync();
     }
 }
