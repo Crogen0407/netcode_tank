@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class ApplicationController : MonoBehaviour
 {
+    [SerializeField] private ClientSingleton _clientPrefab;
+    [SerializeField] private HostSingleton _hostPrefab;
+    
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
@@ -15,7 +18,7 @@ public class ApplicationController : MonoBehaviour
         LaunchInMode(isDedicated);
     }
 
-    private void LaunchInMode(bool isDedicatedServer)
+    private async void LaunchInMode(bool isDedicatedServer)
     {
         if (isDedicatedServer)
         {
@@ -23,7 +26,11 @@ public class ApplicationController : MonoBehaviour
         }
         else
         {
-            
+            HostSingleton hostSingleton = Instantiate(_hostPrefab, transform);
+            hostSingleton.CreateHost();
+
+            ClientSingleton clientSingleton = Instantiate(_clientPrefab, transform);
+            await clientSingleton.CreateClient();
         }
     }
 }
