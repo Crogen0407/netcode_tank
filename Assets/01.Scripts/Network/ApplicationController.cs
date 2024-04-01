@@ -31,6 +31,9 @@ public class ApplicationController : MonoBehaviour
 
             ClientSingleton clientSingleton = Instantiate(_clientPrefab, transform);
             await clientSingleton.CreateClient();
+            
+            //로딩이 모두 완료되었으면 메뉴씬으로 이동한다.
+            ClientSingleton.Instance.GameManager.GotoMenuScene();
         }
     }
 }
