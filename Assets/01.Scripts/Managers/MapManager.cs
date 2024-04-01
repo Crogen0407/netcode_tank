@@ -45,7 +45,8 @@ public class MapManager : MonoBehaviour
                 
                 if(tile != null) continue; //해당 타일에는 장애물이 존재함.
                 Vector3 worldPos = _tilemap.GetCellCenterWorld(cellPoint);
-                Collider2D col = Physics2D.OverlapCircle(worldPos, 0.5f, _whatIsObstacle);
+                Collider2D col = Physics2D.OverlapCircle(worldPos, 0.5f, 
+                    _whatIsObstacle);
                 
                 if(col != null) continue;
                 pointList.Add(worldPos);
