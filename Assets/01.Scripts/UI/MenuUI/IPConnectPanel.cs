@@ -61,21 +61,13 @@ public class IPConnectPanel : MonoBehaviour
 
         if (checker == false) return;
 
-        if(NetworkManager.Singleton.StartHost())
-        {
-            NetworkManager.Singleton.SceneManager.LoadScene(
-                SceneNames.GameScene, LoadSceneMode.Single);
-        }
-        else
-        {
-            NetworkManager.Singleton.Shutdown();
-        }
+        HostSingleton.Instance.GameManager.StartHostLocalNetwork();
     }
 
     private void HandleClientBtnClick()
     {
         if (SetupNetworkPassport() == false) return;
-        if(NetworkManager.Singleton.StartClient() == false)
+        if(ClientSingleton.Instance.GameManager.StartClientLocalNetwork() == false)
         {
             NetworkManager.Singleton.Shutdown();
         }

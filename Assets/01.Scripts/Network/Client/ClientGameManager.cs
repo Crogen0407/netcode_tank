@@ -51,4 +51,9 @@ public class ClientGameManager
             return;
         }
     }
+    
+    public bool StartClientLocalNetwork()
+    {
+        return NetworkManager.Singleton.StartClient();
+    }
 }

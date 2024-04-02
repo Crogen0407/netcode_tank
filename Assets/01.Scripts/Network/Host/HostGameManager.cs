@@ -8,12 +8,13 @@ using Unity.Networking.Transport.Relay;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HostGameManager
 {
     private Allocation _allocation;
     private const int _maxConnections = 8;
-    private string _joinCode;
+    public string joinCode;
     
     public async Task StartHostAsync()
     {
@@ -29,8 +30,8 @@ public class HostGameManager
 
         try
         {
-            _joinCode = await Relay.Instance.GetJoinCodeAsync(_allocation.AllocationId);
-            Debug.Log(_joinCode);
+            joinCode = await Relay.Instance.GetJoinCodeAsync(_allocation.AllocationId);
+            Debug.Log(joinCode);
         }
         catch (Exception e)
         {
@@ -49,6 +50,21 @@ public class HostGameManager
         {
             NetworkManager.Singleton.SceneManager.LoadScene(SceneNames.GameScene,
                 UnityEngine.SceneManagement.LoadSceneMode.Single);
+        }
+    }
+
+    public bool StartHostLocalNetwork()
+    {
+        if(NetworkManager.Singleton.StartHost())
+        {
+            NetworkManager.Singleton.SceneManager.LoadScene(
+                SceneNames.GameScene, LoadSceneMode.Single);
+            return true;
+        }
+        else
+        {
+            NetworkManager.Singleton.Shutdown();
+            return false;
         }
     }
 }
