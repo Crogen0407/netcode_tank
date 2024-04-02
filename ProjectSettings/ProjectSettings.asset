@@ -650,7 +650,13 @@ PlayerSettings:
   XboxOneOverrideIdentityName: 
   XboxOneOverrideIdentityPublisher: 
   vrEditorSettings: {}
-  cloudServicesEnabled: {}
+  cloudServicesEnabled:
+    Build: 0
+    Game Performance: 0
+    Legacy Analytics: 0
+    Purchasing: 0
+    UDP: 0
+    Unity Ads: 0
   luminIcon:
     m_Name: 
     m_ModelFolderPath: 
@@ -670,10 +676,10 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 2ff1f75f-6343-42ab-8489-a633498084c4
+  cloudProjectId: 51f2028c-601c-4d7d-aea7-fe9371b799d5
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: netcode_tank
+  projectName: netcode_tank (1)
   organizationId: mymcoding0407
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0

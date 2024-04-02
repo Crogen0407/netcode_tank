@@ -118,7 +118,7 @@ public class CoinSpawner : NetworkBehaviour
             int index = Random.Range(0, end + 1);
             Vector3 pos = points[index];
 
-            (points[index], points[index]) = (points[end], points[index]);
+            (points[index], points[end]) = (points[end], points[index]);
 
             var coin = _coinPool.Pop();
             coin.transform.position = pos;
@@ -139,7 +139,7 @@ public class CoinSpawner : NetworkBehaviour
 
         if (_decalCircle.showDecal == false)
         {
-            _decalCircle.OpenCircle(point.Position, point.Radius);
+            _decalCircle.OpenCircle(point.Position, point.Radius * 2);
         }
         Debug.Log($"{point.pointName}에서 {sec}초후 {coinCount}개의 코인이 생성됩니다.");
     }

@@ -43,7 +43,7 @@ Material:
     m_Floats:
     - _LineWidth: 0.05
     - _Radius: 0.5
-    - _ShineWidth: 0.05
+    - _ShineWidth: 0.286
     m_Colors:
     - _EdgeColor: {r: 7.999999, g: 4.8500824, b: 0, a: 1}
     - _GlowColor: {r: 3.9999998, g: 3.9999998, b: 3.9999998, a: 1}
