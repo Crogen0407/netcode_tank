@@ -29,8 +29,7 @@ public class LobbyPanelUI : MonoBehaviour
 
     private void Start()
     {
-        float screenHeight = Screen.height;
-        _rectTrm.anchoredPosition = new Vector2(0, screenHeight);
+        _rectTrm.anchoredPosition = new Vector2(0, 2000);
     }
 
     public void OpenWindow()
