@@ -16,6 +16,6 @@ public class RelayCodePanel : MonoBehaviour
             return;
         }
 
-        _relayText.text = HostSingleton.Instance.GameManager.joinCode.ToString();
+        _relayText.text = HostSingleton.Instance.GameManager.JoinCode.ToString();
     }
 }
