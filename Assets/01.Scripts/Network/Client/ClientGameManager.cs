@@ -12,6 +12,8 @@ using UnityEngine.SceneManagement;
 public class ClientGameManager
 {
     private JoinAllocation _allocation;
+    private string _playerName;
+    public string PlayerName => _playerName;
     
     public async Task<bool> InitAsync()
     {
@@ -55,5 +57,10 @@ public class ClientGameManager
     public bool StartClientLocalNetwork()
     {
         return NetworkManager.Singleton.StartClient();
+    }
+
+    public void SetPlayerName(string text)
+    {
+        _playerName = text;
     }
 }

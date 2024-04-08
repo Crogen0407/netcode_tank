@@ -12,6 +12,7 @@ public class LobbyPanelUI : MonoBehaviour
     [SerializeField] private LobbyUI _lobbyUIPrefab;
     [SerializeField] private float _spacing = 30f;
     [SerializeField] private Button _closeBtn;
+    [SerializeField] private Button _refreshBtn;
 
     private List<LobbyUI> _lobbyUIList;
     private RectTransform _rectTrm;
@@ -24,6 +25,7 @@ public class LobbyPanelUI : MonoBehaviour
         _lobbyUIList = new List<LobbyUI>();
         _rectTrm = GetComponent<RectTransform>();
         _closeBtn.onClick.AddListener(CloseWindow);
+        _refreshBtn.onClick.AddListener(RefreshList);
         _canvasGroup = GetComponent<CanvasGroup>();
     }
 
@@ -57,6 +59,7 @@ public class LobbyPanelUI : MonoBehaviour
     {
         if (_isRefresh) return;
         _isRefresh = true;
+        LoaderUI.Instance.Show(true);
         try
         {
             QueryLobbiesOptions options = new QueryLobbiesOptions();
@@ -91,6 +94,7 @@ public class LobbyPanelUI : MonoBehaviour
             Debug.LogError(ex);
         }
         _isRefresh = false;
+        LoaderUI.Instance.Show(false);
     }
 
     private void ClearLobbies()
