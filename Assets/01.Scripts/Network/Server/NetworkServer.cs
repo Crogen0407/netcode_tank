@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using Unity.Netcode;
@@ -47,8 +48,16 @@ public class NetworkServer : IDisposable
 
         response.CreatePlayerObject = false;
         response.Approved = true;
+
+        HostSingleton.Instance.StartCoroutine(CreatePanelWithDelay(0.5f, request.ClientNetworkId, data.username));
     }
 
+    private IEnumerator CreatePanelWithDelay(float time, ulong clientID, string username)
+    {
+        yield return new WaitForSeconds(time);
+        GameManager.Instance.CreateUIPanel(clientID, username);
+    }
+    
     public void Dispose()
     {
         if (_networkManager == null) return;
