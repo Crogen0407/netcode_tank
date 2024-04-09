@@ -70,7 +70,9 @@ public class HostGameManager
                 }
             };
 
-            Lobby lobby = await Lobbies.Instance.CreateLobbyAsync("Dummy", 
+            string playerName = ClientSingleton.Instance.GameManager.PlayerName;
+
+            Lobby lobby = await Lobbies.Instance.CreateLobbyAsync($"{playerName}'s Lobby", 
                                 _maxConnections, lobbyOption);
 
             _lobbyId = lobby.Id; //만들어진 로비의 아이디를 기록한다.
@@ -84,6 +86,8 @@ public class HostGameManager
         }
 
         MakeNetworkServer();
+        
+        ClientSingleton.Instance.GameManager.SetPayloadData();
 
         if(NetworkManager.Singleton.StartHost())
         {

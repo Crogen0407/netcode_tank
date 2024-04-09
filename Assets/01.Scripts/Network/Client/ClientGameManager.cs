@@ -17,10 +17,15 @@ public class ClientGameManager
     private string _playerName;
     public string PlayerName => _playerName;
     
+    public NetworkClient NetClient { get; private set; }
+    
     public async Task<bool> InitAsync()
     {
         //UGS 서비스 인증파트가 들어갈 예정입니다.
         await UnityServices.InitializeAsync(); //초기화
+
+        NetClient = new NetworkClient(NetworkManager.Singleton);
+        
 
         AuthState authState = await UGSAuthWrapper.DoAuth(); //인증이 5회 진행될거고
 
