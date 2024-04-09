@@ -11,7 +11,7 @@ using Unity.Services.Relay.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ClientGameManager
+public class ClientGameManager : IDisposable
 {
     private JoinAllocation _allocation;
     private string _playerName;
@@ -93,5 +93,15 @@ public class ClientGameManager
         
         //접속 시 데이터 실어주는 것
         NetworkManager.Singleton.NetworkConfig.ConnectionData = payload;
+    }
+
+    public void Dispose()
+    {
+        NetClient?.Dispose();
+    }
+
+    public void Disconnect()
+    {
+        NetClient?.Disconnect();
     }
 }

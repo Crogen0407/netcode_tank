@@ -1,7 +1,8 @@
+using System;
 using Unity.Netcode;
 using UnityEngine.SceneManagement;
 
-public class NetworkClient
+public class NetworkClient : IDisposable
 {
     private NetworkManager _networkManager;
 
@@ -28,6 +29,14 @@ public class NetworkClient
         if (_networkManager.IsConnectedClient)
         {
             _networkManager.Shutdown(); //강제 종료
+        }
+    }
+
+    public void Dispose()
+    {
+        if (_networkManager != null)
+        {
+            _networkManager.OnClientDisconnectCallback -= HandleClientDisconnect;
         }
     }
 }

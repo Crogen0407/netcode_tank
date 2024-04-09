@@ -12,7 +12,7 @@ using Unity.Services.Relay.Models;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HostGameManager
+public class HostGameManager : IDisposable
 {
     private Allocation _allocation;
     private const int _maxConnections = 8;
@@ -123,5 +123,30 @@ public class HostGameManager
             return false;
         }
         
+    }
+
+    public void Dispose()
+    {
+        Shutdown();
+    }
+
+    private async void Shutdown()
+    {
+        HostSingleton.Instance.StopAllCoroutines(); //하트비트 꺼버리고
+
+        if (!string.IsNullOrEmpty(_lobbyId))
+        {
+            try
+            {
+                await Lobbies.Instance.DeleteLobbyAsync(_lobbyId);
+            }
+            catch (LobbyServiceException ex)
+            {
+                Debug.LogError(ex);
+            }
+        }
+
+        _lobbyId = string.Empty;
+        NetServer?.Dispose();
     }
 }
