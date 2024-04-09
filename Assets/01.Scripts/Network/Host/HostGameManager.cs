@@ -19,6 +19,13 @@ public class HostGameManager
     private string _joinCode;
     public string JoinCode => _joinCode;
     private string _lobbyId; //내가 게임을 만들고, 로비를 만들건데 그 아이디
+    
+    public NetworkServer NetServer { get; private set; }
+
+    private void MakeNetworkServer()
+    {
+        NetServer = new NetworkServer(NetworkManager.Singleton);
+    }
 
     public async Task StartHostAsync()
     {
@@ -76,6 +83,8 @@ public class HostGameManager
             return;
         }
 
+        MakeNetworkServer();
+
         if(NetworkManager.Singleton.StartHost())
         {
             NetworkManager.Singleton.SceneManager.LoadScene(
@@ -96,6 +105,7 @@ public class HostGameManager
 
     public bool StartHostLocalNetwork()
     {
+        MakeNetworkServer();
         //여기다 코드 옮겨적으면 된다.
         if (NetworkManager.Singleton.StartHost())
         {

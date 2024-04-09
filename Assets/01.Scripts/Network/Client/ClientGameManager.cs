@@ -1,8 +1,10 @@
 using System;
+using System.Text;
 using System.Threading.Tasks;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using Unity.Networking.Transport.Relay;
+using Unity.Services.Authentication;
 using Unity.Services.Core;
 using Unity.Services.Relay;
 using Unity.Services.Relay.Models;
@@ -45,6 +47,8 @@ public class ClientGameManager
             var relayServerData = new RelayServerData(_allocation, "dtls");
             transport.SetRelayServerData(relayServerData);
 
+            SetPayloadData();
+            
             NetworkManager.Singleton.StartClient();
         }
         catch (Exception e)
@@ -56,11 +60,33 @@ public class ClientGameManager
     
     public bool StartClientLocalNetwork()
     {
-        return NetworkManager.Singleton.StartClient();
+        SetPayloadData();
+        if (NetworkManager.Singleton.StartClient() == false)
+        {
+            NetworkManager.Singleton.Shutdown();
+            return false;
+        }
+        return true;
     }
 
     public void SetPlayerName(string text)
     {
         _playerName = text;
+    }
+
+    //요청헤더에 사용자 정보 저장하기
+    public void SetPayloadData()
+    {
+        UserData userData = new UserData()
+        {
+            username = _playerName,
+            userAuthID = AuthenticationService.Instance.PlayerId //UGS에 등록된 아이디.
+        };
+
+        string json = JsonUtility.ToJson(userData);
+        byte[] payload = Encoding.UTF8.GetBytes(json);
+        
+        //접속 시 데이터 실어주는 것
+        NetworkManager.Singleton.NetworkConfig.ConnectionData = payload;
     }
 }
