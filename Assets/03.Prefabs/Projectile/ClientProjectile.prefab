@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8116725006400050504, guid: 5cdf93487ff5eee47896618c664df800, type: 3}
+      propertyPath: _destroyObj
+      value: 
+      objectReference: {fileID: 4072480067451823577, guid: 4500b47693a1c1d429dcc303bf413a15, type: 3}
     - target: {fileID: 8180803848626448587, guid: 5cdf93487ff5eee47896618c664df800, type: 3}
       propertyPath: m_IsTrigger
       value: 1

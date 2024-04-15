@@ -1,19 +1,24 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
+    [SerializeField] private PlayerController _playerPrefab;
+    [SerializeField] private TankSelectUI _selectUIPrefab;
+    [SerializeField] private RectTransform _selectPanelTrm;
+    
+    private TankSelectPanel _tankSelectPanel;
+    
     private void Awake()
     {
         Instance = this;
+        _tankSelectPanel = _selectPanelTrm.parent.GetComponent<TankSelectPanel>();
     }
-
-    [SerializeField] private TankSelectUI _selectUIPrefab;
-    [SerializeField] private RectTransform _selectPanelTrm;
 
     public void CreateUIPanel(ulong clientID, string username)
     {
@@ -21,7 +26,34 @@ public class GameManager : MonoBehaviour
         ui.NetworkObject.SpawnAsPlayerObject(clientID);
         ui.transform.SetParent(_selectPanelTrm);
         ui.transform.localScale = Vector3.one;
+
+        _tankSelectPanel.AddSelectUI(ui); //이건 호스트만 실행하니까
         
         ui.SetTankName(username);
+    }
+
+    public void StartGame(List<TankSelectUI> tankUIList)
+    {
+        foreach (TankSelectUI ui in tankUIList)
+        {
+            ulong clientID = ui.OwnerClientId; //이걸 소유하고 있는 유저의 clientID
+            Color color = ui.selectedColor.Value;
+
+            SpawnTank(clientID, color);
+        }
+    }
+
+    public async void SpawnTank(ulong clientID, Color color, float delay = 0)
+    {
+        if (delay > 0)
+        {
+            await Task.Delay(Mathf.CeilToInt(delay * 1000));
+        }
+
+        Vector3 position = TankSpawnPoint.GetRandomSpawnPos();
+
+        PlayerController tank = Instantiate(_playerPrefab, position, Quaternion.identity);
+        tank.NetworkObject.SpawnAsPlayerObject(clientID); //이 클라이언트 아이디가 주인이 되는거고
+        tank.SetTankColor(color);
     }
 }
