@@ -21,24 +21,27 @@ public class LobbyUI : MonoBehaviour
         _titleText.text = lobby.Name;
         _countText.text = $"{lobby.Players.Count} / {lobby.MaxPlayers}";
         _lobby = lobby;
-        
+
         _enterBtn.onClick.AddListener(HandleEnterBtnClick);
     }
 
     private async void HandleEnterBtnClick()
     {
+        LoaderUI.Instance.Show(true);
         try
         {
-            //ë‚´ê°€ ê°€ì§€ê³  ìˆëŠ” ë¡œë¹„ì •ë³´ë¡œ ì„œë²„ì—ì„œ ë¡œë¹„ë¥¼ ë¶ˆëŸ¬ì™”ì–´.
+            //³»°¡ °¡Áö°í ÀÖ´Â ·ÎºñÁ¤º¸·Î ¼­¹ö¿¡¼­ ·Îºñ¸¦ ºÒ·¯¿Ô¾î.
             Lobby lobby = await Lobbies.Instance.JoinLobbyByIdAsync(_lobby.Id);
+
             string joinCode = lobby.Data["JoinCode"].Value;
 
-            await ClientSingleton.Instance.GameManager.StartClientWithJoinCode(joinCode);
-        }
-        catch (LobbyServiceException ex)
+            await ClientSingleton.Instance.GameManager
+                                    .StartClientWithJoinCode(joinCode);
+        }catch(LobbyServiceException ex)
         {
             Debug.LogError(ex);
-        }        
+            LoaderUI.Instance.Show(false);
+        }
     }
 
     private void Awake()

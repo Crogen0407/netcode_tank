@@ -1,5 +1,4 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,3 +23,4 @@ public class FeedbackPlayer : MonoBehaviour
         _feedbackToPlay.ForEach(x => x.CompleteFeedback());
     }
 }
+

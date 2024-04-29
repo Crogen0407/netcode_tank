@@ -19,7 +19,7 @@ public class HostGameManager : IDisposable
     private string _joinCode;
     public string JoinCode => _joinCode;
     private string _lobbyId; //내가 게임을 만들고, 로비를 만들건데 그 아이디
-    
+
     public NetworkServer NetServer { get; private set; }
 
     private void MakeNetworkServer()
@@ -86,13 +86,28 @@ public class HostGameManager : IDisposable
         }
 
         MakeNetworkServer();
-        
+
         ClientSingleton.Instance.GameManager.SetPayloadData();
 
-        if(NetworkManager.Singleton.StartHost())
+        NetServer.OnClientLeft += HandleClientLeft;
+
+        if (NetworkManager.Singleton.StartHost())
         {
             NetworkManager.Singleton.SceneManager.LoadScene(
                 SceneNames.GameScene, UnityEngine.SceneManagement.LoadSceneMode.Single);
+        }
+    }
+
+    private async void HandleClientLeft(string authID)
+    {
+        if (_lobbyId == null) return;
+
+        try
+        {
+            await LobbyService.Instance.RemovePlayerAsync(_lobbyId, authID);
+        }catch(LobbyServiceException ex)
+        {
+            Debug.LogError(ex);
         }
     }
 
@@ -110,6 +125,7 @@ public class HostGameManager : IDisposable
     public bool StartHostLocalNetwork()
     {
         MakeNetworkServer();
+        ClientSingleton.Instance.GameManager.SetPayloadData();
         //여기다 코드 옮겨적으면 된다.
         if (NetworkManager.Singleton.StartHost())
         {
@@ -130,23 +146,24 @@ public class HostGameManager : IDisposable
         Shutdown();
     }
 
-    private async void Shutdown()
+    public async void Shutdown()
     {
-        HostSingleton.Instance.StopAllCoroutines(); //하트비트 꺼버리고
+        if(HostSingleton.Instance != null)
+            HostSingleton.Instance.StopAllCoroutines(); //하트비트 꺼버리고
 
-        if (!string.IsNullOrEmpty(_lobbyId))
+        if(!string.IsNullOrEmpty(_lobbyId))
         {
             try
             {
                 await Lobbies.Instance.DeleteLobbyAsync(_lobbyId);
-            }
-            catch (LobbyServiceException ex)
+            }catch(LobbyServiceException ex)
             {
                 Debug.LogError(ex);
             }
         }
-
+        NetServer.OnClientLeft -= HandleClientLeft;
         _lobbyId = string.Empty;
         NetServer?.Dispose();
     }
+       
 }

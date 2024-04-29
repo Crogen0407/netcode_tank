@@ -1,22 +1,25 @@
-ï»¿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.UI;
+
 public class TankSelectPanel : NetworkBehaviour
 {
+
     [SerializeField] private Button _startBtn;
     [SerializeField] private List<TankSelectUI> _selectUIList;
 
     private void Awake()
     {
-        // ì´ ë¦¬ìŠ¤íŠ¸ëŠ” ì„œë²„ë§Œ ê°€ì§€ê³  ìˆì„ ê±°ë‹¤
+        //ÀÌ ¸®½ºÆ®´Â ¼­¹ö¸¸ °¡Áö°í ÀÖÀ» °Å´Ù.
         _selectUIList = new List<TankSelectUI>();
     }
 
     public override void OnNetworkSpawn()
     {
-        if (IsHost)
+        if(IsHost)
         {
             _startBtn.onClick.AddListener(HandleGameStart);
         }
@@ -28,8 +31,10 @@ public class TankSelectPanel : NetworkBehaviour
 
     private void HandleGameStart()
     {
+        //Debug.Log("Game Start!!");
         GameManager.Instance.StartGame(_selectUIList);
 
+        //¿©±â´Ù°¡ ÀÛ¼ºÇØÁÖ¸é µË´Ï´Ù.
         GameStartClientRpc();
     }
 
@@ -44,13 +49,9 @@ public class TankSelectPanel : NetworkBehaviour
         _selectUIList.Add(ui);
         ui.OnDisconnectEvent += HandleDisconnected;
         ui.OnReadyChangeEvent += HandleReadyChanged;
-    }
 
-    private void HandleReadyChanged()
-    {
-        bool allReady = _selectUIList.Count > 0 && 
-                        _selectUIList.Any(x => x.isReady.Value == false) == false;
-        _startBtn.interactable = allReady;
+        
+        HandleReadyChanged(false);
     }
 
     private void HandleDisconnected(TankSelectUI ui)
@@ -58,4 +59,13 @@ public class TankSelectPanel : NetworkBehaviour
         ui.OnDisconnectEvent -= HandleDisconnected;
         _selectUIList.Remove(ui);
     }
+
+    private void HandleReadyChanged(bool value)
+    {
+        bool allReady = _selectUIList.Count > 0 
+            && _selectUIList.Any(x => x.isReady.Value == false) == false;
+
+        _startBtn.interactable = allReady;
+    }
+
 }

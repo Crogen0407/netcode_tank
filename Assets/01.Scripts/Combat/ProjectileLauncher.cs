@@ -50,7 +50,7 @@ public class ProjectileLauncher : NetworkBehaviour
     {
         GameObject projectile = Instantiate(_clientProjectilePrefab, spawnPos, Quaternion.identity);
 
-        projectile.transform.up = dir;// ìœ„ë°©í–¥ìœ¼ë¡œ íšŒì „
+        projectile.transform.up = dir;// À§¹æÇâÀ¸·Î È¸Àü
 
         Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
         Physics2D.IgnoreCollision(_playerCollider, projectileCollider);
@@ -66,13 +66,13 @@ public class ProjectileLauncher : NetworkBehaviour
     private void FireServerRpc(Vector3 spawnPos, Vector3 dir)
     {
         GameObject projectile = Instantiate(_serverProjectilePrefab, spawnPos, Quaternion.identity);
-        projectile.transform.up = dir;// ìœ„ë°©í–¥ìœ¼ë¡œ íšŒì „
+        projectile.transform.up = dir;// À§¹æÇâÀ¸·Î È¸Àü
         Collider2D projectileCollider = projectile.GetComponent<Collider2D>();
         Physics2D.IgnoreCollision(_playerCollider, projectileCollider);
         Rigidbody2D rigidbody = projectile.GetComponent<Rigidbody2D>();
         rigidbody.velocity = projectile.transform.up * _projectileSpeed;
 
-        //ë§Œë“¤ì–´!
+        //¸¸µé¾î!
         SpawnDummyProjectileClientRpc(spawnPos, dir);
     }
 

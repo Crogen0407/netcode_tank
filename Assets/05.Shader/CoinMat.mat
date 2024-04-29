@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3102639370640619514
+--- !u!114 &-7002886773668070036
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: CoinMat
-  m_Shader: {fileID: -6465566751694194690, guid: 77748082cd201ad478396cf42d043485, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 19fb5ae2a51d3d94d98412d73feed23d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -55,10 +55,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _ShineOffset: 0.1
-    - _Speed: 2
+    - _Speed: 1
     - _ViewOffset: 1.1
     m_Colors:
-    - _HighlightColor: {r: 8, g: 8, b: 8, a: 1}
-    - _MetalColor: {r: 0.97647053, g: 0.6980392, b: 0.19999996, a: 1}
-    - _ViewLineColor: {r: 4, g: 4, b: 0, a: 1}
+    - _HighlightColor: {r: 8, g: 8, b: 8, a: 0}
+    - _MetalColor: {r: 0.97647053, g: 0.6980392, b: 0.19999996, a: 0}
+    - _ViewLineColor: {r: 14.928529, g: 5.949043, b: 0, a: 1}
   m_BuildTextureStacks: []

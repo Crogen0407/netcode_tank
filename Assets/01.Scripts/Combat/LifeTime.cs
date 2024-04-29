@@ -1,17 +1,14 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class LifeTime : MonoBehaviour
+public class Lifetime : MonoBehaviour
 {
-    [SerializeField] private float _lifeTime;
-    private float _currentLifeTime;
+    [SerializeField] private float _lifetime;
+    private float _currentLifetime;
 
     private void Update()
     {
-        _currentLifeTime += Time.deltaTime;
-        if (_currentLifeTime >= _lifeTime)
+        _currentLifetime += Time.deltaTime;
+        if (_currentLifetime >= _lifetime)
             Destroy(gameObject);
     }
 }

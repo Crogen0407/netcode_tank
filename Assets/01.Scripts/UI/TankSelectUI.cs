@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
 using TMPro;
 using Unity.Collections;
 using Unity.Netcode;
@@ -11,15 +8,16 @@ using Color = UnityEngine.Color;
 
 public class TankSelectUI : NetworkBehaviour
 {
-    public event Action OnReadyChangeEvent;
+    public event Action<bool> OnReadyChangeEvent;
     public event Action<TankSelectUI> OnDisconnectEvent;
+
     [SerializeField] private Image _tankImage;
     [SerializeField] private TextMeshProUGUI _nameText;
     [SerializeField] private Button[] _colorButtons;
     [SerializeField] private Button _readyBtn;
     [SerializeField] private Image _statusImage;
 
-    
+
     [SerializeField] private Sprite _readySprite, _notReadySprite, _readyBtnSprite, _notReadyBtnSprite;
 
     public NetworkVariable<bool> isReady;
@@ -50,8 +48,8 @@ public class TankSelectUI : NetworkBehaviour
         isReady.OnValueChanged += HandleIsReadyChanged;
         selectedColor.OnValueChanged += HandleSelectedColorChanged;
 
-        //ì²˜ìŒ ì‹œìž‘ì‹œì— ì„œë²„ê°€ ê°€ì§€ê³  ìžˆì—ˆë˜ ê¸°ë³¸ ê°’ìœ¼ë¡œ í•¸ë“¤ë§ëœë‹¤.
-        HandlePlayerNameChanged(string.Empty, playerName.Value);  //ì´ê±° ì¶”ê°€
+        //Ã³À½½ÃÀÛ½Ã¿¡ ¼­¹ö°¡ °¡Áö°í ÀÖ¾ú´ø ±âº» °ªÀ¸·Î ÇÚµé¸µµÈ´Ù.
+        HandlePlayerNameChanged(string.Empty, playerName.Value);
         HandleIsReadyChanged(false, isReady.Value);
         HandleSelectedColorChanged(Color.white, selectedColor.Value);
 
@@ -60,27 +58,27 @@ public class TankSelectUI : NetworkBehaviour
             isReady.Value = false;
             selectedColor.Value = Color.red;
         }
-        
+
         if (IsOwner == false) return;
         _readyBtn.onClick.AddListener(HandleReadyBtnClick);
 
-        foreach(Button button in _colorButtons)
+        foreach (Button button in _colorButtons)
         {
             button.onClick.AddListener(() =>
             {
                 SetTankColor(button.image.color);
             });
         }
-        
+
     }
 
     public override void OnNetworkDespawn()
     {
-        if (IsServer)
+        if(IsServer)
         {
-            OnDisconnectEvent?.Invoke(this); //
+            OnDisconnectEvent?.Invoke(this); //ÀÌ³à¼®ÀÌ Á¾·áµÇ¾ú´Ù¶ó°í ¾Ë·ÁÁÖ´Â°ÅÁö
         }
-        
+
         isReady.OnValueChanged -= HandleIsReadyChanged;
         selectedColor.OnValueChanged -= HandleSelectedColorChanged;
 
@@ -104,20 +102,20 @@ public class TankSelectUI : NetworkBehaviour
         {
             _statusImage.sprite = _readySprite;
             _readyBtn.image.sprite = _readyBtnSprite;
-            _readyBtnText.text = "ì¤€ë¹„ ì™„ë£Œ";
+            _readyBtnText.text = "ÁØºñ ¿Ï·á";
         }
         else
         {
             _statusImage.sprite = _notReadySprite;
             _readyBtn.image.sprite = _notReadyBtnSprite;
-            _readyBtnText.text = "ì¤€ë¹„";
+            _readyBtnText.text = "ÁØºñ";
         }
     }
 
 
     #region Only Owner execution area
     private void HandleReadyBtnClick()
-    {        
+    {
         SetReadyClaimToServerRpc(!isReady.Value);
     }
 
@@ -145,13 +143,13 @@ public class TankSelectUI : NetworkBehaviour
     public void SetReadyClaimToServerRpc(bool value)
     {
         isReady.Value = value;
-        OnReadyChangeEvent?.Invoke();
+        OnReadyChangeEvent?.Invoke(value);
     }
     #endregion
 
 
     #region Only Client execution area
-    
+
     #endregion
 
 }

@@ -4,5 +4,5 @@ using System;
 public class UserData
 {
     public string username;
-    public string userAuthID; //UGSì¸ì¦ì•„ì´ë”” ìœ ì €ë§ˆë‹¤ ê³ ìœ í•¨.
+    public string userAuthID; //UGSÀÎÁõ¾ÆÀÌµğ À¯Àú¸¶´Ù °íÀ¯ÇÑ.
 }

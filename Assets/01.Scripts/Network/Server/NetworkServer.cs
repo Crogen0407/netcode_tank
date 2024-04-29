@@ -9,10 +9,12 @@ public class NetworkServer : IDisposable
 {
     public NetworkManager _networkManager;
 
-    //í´ë¼ì´ì–¸íŠ¸ ì•„ì´ë””ë¡œ Auth ì•„ì´ë”” ì•Œì•„ë‚´ëŠ” ê²ƒ
-    private Dictionary<ulong, string> _clientToAuthDictionary = new Dictionary<ulong, string>();
-    private Dictionary<string, UserData> _authToUserDictionary = new Dictionary<string, UserData>();    
+    public Action<string> OnClientLeft; //AuthID
     
+    //Å¬¶óÀÌ¾ğÆ® ¾ÆÀÌµğ·Î Auth ¾ÆÀÌµğ ¾Ë¾Æ³»´Â °Í
+    private Dictionary<ulong, string> _clientToAuthDictionary = new Dictionary<ulong, string>();
+    private Dictionary<string, UserData> _authToUserDictionary = new Dictionary<string, UserData>();
+
     public NetworkServer(NetworkManager manager)
     {
         _networkManager = manager;
@@ -26,10 +28,10 @@ public class NetworkServer : IDisposable
         _networkManager.OnClientDisconnectCallback += HandleClientDisconnect;
     }
 
+    //Á¢¼Ó ²÷À¸¸é 2°³ÀÇ µñ¼Å³Ê¸® ¸ğµÎ »èÁ¦ÇÑ´Ù.
     private void HandleClientDisconnect(ulong clientID)
     {
-        //ì ‘ì† ëŠìœ¼ë©´ 2ê°œì˜ ë”•ì…”ë„ˆë¦¬ ëª¨ë‘ ì‚­ì œí•œë‹¤.
-        if (_clientToAuthDictionary.TryGetValue(clientID, out string authID))
+        if(_clientToAuthDictionary.TryGetValue(clientID, out string authID))
         {
             _clientToAuthDictionary.Remove(clientID);
             _authToUserDictionary.Remove(authID);
@@ -37,10 +39,10 @@ public class NetworkServer : IDisposable
     }
 
     private void HandleApprovalCheck(
-        NetworkManager.ConnectionApprovalRequest request, 
+        NetworkManager.ConnectionApprovalRequest request,
         NetworkManager.ConnectionApprovalResponse response)
     {
-        string json = Encoding.UTF8.GetString(request.Payload);
+        string json = Encoding.UTF8.GetString( request.Payload);
         UserData data = JsonUtility.FromJson<UserData>(json);
 
         _clientToAuthDictionary[request.ClientNetworkId] = data.userAuthID;
@@ -49,7 +51,8 @@ public class NetworkServer : IDisposable
         response.CreatePlayerObject = false;
         response.Approved = true;
 
-        HostSingleton.Instance.StartCoroutine(CreatePanelWithDelay(0.5f, request.ClientNetworkId, data.username));
+        HostSingleton.Instance.StartCoroutine(
+            CreatePanelWithDelay(0.5f, request.ClientNetworkId, data.username));
     }
 
     private IEnumerator CreatePanelWithDelay(float time, ulong clientID, string username)
@@ -57,7 +60,7 @@ public class NetworkServer : IDisposable
         yield return new WaitForSeconds(time);
         GameManager.Instance.CreateUIPanel(clientID, username);
     }
-    
+
     public void Dispose()
     {
         if (_networkManager == null) return;
@@ -66,17 +69,17 @@ public class NetworkServer : IDisposable
         _networkManager.OnServerStarted -= HandleServerStart;
         _networkManager.OnClientDisconnectCallback -= HandleClientDisconnect;
 
-        if (_networkManager.IsListening)
+        if(_networkManager.IsListening)
         {
             _networkManager.Shutdown();
         }
     }
 
-    public UserData GetUseDataByClientID(ulong clientID)
+    public UserData GetUserDataByClientID(ulong clientID)
     {
-        if (_clientToAuthDictionary.TryGetValue(clientID, out string authID))
+        if(_clientToAuthDictionary.TryGetValue(clientID, out string authID))
         {
-            if (_authToUserDictionary.TryGetValue(authID, out UserData data))
+            if(_authToUserDictionary.TryGetValue(authID, out UserData data))
             {
                 return data;
             }

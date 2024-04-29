@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -6,25 +5,24 @@ using UnityEngine;
 
 public class ClientSingleton : MonoBehaviour
 {
-    private static ClientSingleton _instance;
-
+    private static ClientSingleton instance;
     public static ClientSingleton Instance
     {
         get
         {
-            if (_instance != null) return _instance;
+            if (instance != null) return instance;
 
-            _instance = FindObjectOfType<ClientSingleton>();
+            instance = FindObjectOfType<ClientSingleton>();
 
-            if (_instance == null)
+            if(instance == null)
             {
                 Debug.LogError("No Client Singleton");
             }
 
-            return _instance;
+            return instance;
         }
     }
-    
+
     public ClientGameManager GameManager { get; set; }
 
     public async Task<bool> CreateClient()

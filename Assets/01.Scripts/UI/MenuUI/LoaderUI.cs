@@ -1,14 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class LoaderUI : MonoBehaviour
 {
     private static LoaderUI _instance;
-
     public static LoaderUI Instance
     {
         get
@@ -22,7 +17,6 @@ public class LoaderUI : MonoBehaviour
             {
                 Debug.LogError($"There is no loader UI");
             }
-
             return _instance;
         }
     }

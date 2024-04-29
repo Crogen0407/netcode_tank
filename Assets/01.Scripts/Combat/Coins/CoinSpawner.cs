@@ -9,34 +9,33 @@ public class CoinSpawner : NetworkBehaviour
 {
     [Header("Reference")]
     [SerializeField] private ReSpawnCoin _coinPrefab;
-    [SerializeField] private DecalCirlce _decalCircle;
-    
+    [SerializeField] private DecalCircle _decalCircle;
+
     [Header("Setting values")]
-    [SerializeField] private int _maxCoins = 30; //ìµœëŒ€ 30ê°œì”© ì½”ì¸ ìƒì„±
-    [SerializeField] private int _coinValue = 10; //ì½”ì¸ë‹¹ 10
-    [SerializeField] private LayerMask _layerMask; //ì½”ì¸ ìƒì„±í•˜ëŠ” ì§€ì—­ì— ì¥ì• ë¬¼ì´ ìˆëŠ”ì§€ ê²€ì‚¬
+    [SerializeField] private int _maxCoins = 30; //ÃÖ´ë 30°³¾¿ ÄÚÀÎ »ı¼º
+    [SerializeField] private int _coinValue = 10; //ÄÚÀÎ´ç 10
+    [SerializeField] private LayerMask _layerMask; //ÄÚÀÎ »ı¼ºÇÏ´Â Áö¿ª¿¡ Àå¾Ö¹°ÀÌ ÀÖ´ÂÁö °Ë»ç
     [SerializeField] private float _spawnTerm = 30f;
     //[SerializeField] private float _spawnRadius = 8f;
-    
     [SerializeField] private List<SpawnPoint> spawnPointList;
 
     private bool _isSpawning = false;
     private float _spawnTime = 0;
-    private int _spawnCountTime = 5; //5ì´ˆ ì¹´ìš´íŠ¸ë‹¤ìš´ í•˜ê³  ì‹œì‘
+    private int _spawnCountTime = 5; //5ÃÊ Ä«¿îÆ®´Ù¿î ÇÏ°í ½ÃÀÛ
 
     private float _coinRadius;
 
-    private Stack<ReSpawnCoin> _coinPool = new Stack<ReSpawnCoin>(); //ì½”ì¸ í’€
-    private List<ReSpawnCoin> _activeCoinList = new List<ReSpawnCoin>(); //í™œì„±í™”ëœ ì½”ì¸
+    private Stack<ReSpawnCoin> _coinPool = new Stack<ReSpawnCoin>(); //ÄÚÀÎ Ç®
+    private List<ReSpawnCoin> _activeCoinList = new List<ReSpawnCoin>(); //È°¼ºÈ­µÈ ÄÚÀÎ
 
-    //ì´ë…€ì„ë„ ì„œë²„ë§Œ ì‹¤í–‰í•˜ëŠ” ì½”ë“œë‹¤.
+    //ÀÌ³à¼®µµ ¼­¹ö¸¸ ½ÇÇàÇÏ´Â ÄÚµå´Ù.
     private ReSpawnCoin SpawnCoin()
     {
         if (IsServer == false) return null;
 
         ReSpawnCoin coin = Instantiate(_coinPrefab, Vector3.zero, Quaternion.identity);
         coin.SetValue(_coinValue);
-        coin.GetComponent<NetworkObject>().Spawn(); //ë„¤íŠ¸ì›Œí¬ë¥¼ í†µí•´ì„œ ì´ë…€ì„ì„ ë‹¤ ìŠ¤í°í•œë‹¤.
+        coin.GetComponent<NetworkObject>().Spawn(); //³×Æ®¿öÅ©¸¦ ÅëÇØ¼­ ÀÌ³à¼®À» ´Ù ½ºÆùÇÑ´Ù.
 
         coin.OnCollected += HandleCoinCollected;
 
@@ -44,7 +43,7 @@ public class CoinSpawner : NetworkBehaviour
     }
 
 
-    //ì´ê²ƒë„ ì„œë²„ë§Œ í• êº¼ì•¼.
+    //ÀÌ°Íµµ ¼­¹ö¸¸ ÇÒ²¨¾ß.
     private void HandleCoinCollected(ReSpawnCoin coin)
     {
         if (IsServer == false) return;
@@ -61,13 +60,13 @@ public class CoinSpawner : NetworkBehaviour
             return;
         }
 
-        //ì´ê±¸ë¡œ ì½”ì¸ í¬ê¸°ë¥¼ ì°ë‹¤.
+        //ÀÌ°É·Î ÄÚÀÎ Å©±â¸¦ Àé´Ù.
         _coinRadius = _coinPrefab.GetComponent<CircleCollider2D>().radius;
 
         for(int i = 0; i < _maxCoins; ++i)
         {
             ReSpawnCoin coin = SpawnCoin();
-            coin.SetVisible(false); //ì²˜ìŒ ìƒì„±ëœ ì• ë“¤ì„ êº¼ì¤€ë‹¤.
+            coin.SetVisible(false); //Ã³À½ »ı¼ºµÈ ¾ÖµéÀ» ²¨ÁØ´Ù.
             _coinPool.Push(coin);
         }
     }
@@ -81,7 +80,8 @@ public class CoinSpawner : NetworkBehaviour
     {
         if (IsServer == false) return;
 
-        //ë‚˜ì¤‘ì— ì—¬ê¸°ì— ê²Œì„ì´ ì‹œì‘ë˜ì—ˆì„ ë•Œë§Œ ì½”ì¸ì´ ìƒì„±ë˜ê²Œ ë³€ê²½í•´ì•¼ í•´.
+        //³ªÁß¿¡ ¿©±â¿¡ °ÔÀÓÀÌ ½ÃÀÛµÇ¾úÀ» ¶§¸¸ ÄÚÀÎÀÌ »ı¼ºµÇ°Ô º¯°æÇØ¾ß ÇØ.
+        if (GameManager.Instance.GameStarted == false) return;
 
 
         if(_isSpawning == false && _activeCoinList.Count == 0)
@@ -100,7 +100,7 @@ public class CoinSpawner : NetworkBehaviour
         _isSpawning = true;
         int pointIndex = Random.Range(0, spawnPointList.Count);
         SpawnPoint point = spawnPointList[pointIndex];
-        int maxCoinCnt = Random.Range(_maxCoins, point.SpawnPoints.Count);
+        int maxCoinCnt = Mathf.Min(_maxCoins, point.SpawnPoints.Count);
         int coinCount = Random.Range(maxCoinCnt / 2, maxCoinCnt + 1);
 
         for(int i = _spawnCountTime; i > 0; --i)
@@ -109,16 +109,17 @@ public class CoinSpawner : NetworkBehaviour
             yield return new WaitForSeconds(1f);
         }
 
-        //ì´ë¶€ë¶„ì€ ë‚˜ì¤‘ì— ê°œì„ ì„ í• êº¼ì•¼.
+        //ÀÌºÎºĞÀº ³ªÁß¿¡ °³¼±À» ÇÒ²¨¾ß.
         float coinDelay = 2f;
         List<Vector3> points = point.SpawnPoints;
-        for(int i = 0; i < coinCount; ++i)
+
+        for (int i = 0; i < coinCount; ++i)
         {
             int end = points.Count - i - 1;
-            int index = Random.Range(0, end + 1);
-            Vector3 pos = points[index];
+            int idx = Random.Range(0, end + 1);
+            Vector3 pos = points[idx];
 
-            (points[index], points[end]) = (points[end], points[index]);
+            (points[idx], points[end]) = (points[end], points[idx]);
 
             var coin = _coinPool.Pop();
             coin.transform.position = pos;
@@ -127,25 +128,29 @@ public class CoinSpawner : NetworkBehaviour
 
             yield return new WaitForSeconds(coinDelay);
         }
-        
+
         _isSpawning = false;
-        DecalCircleClientRpc();
+        DecalCircleCloseClientRpc();
     }
 
     [ClientRpc]
     private void CountDownClientRpc(int sec, int pointIndex, int coinCount)
-    {            
+    {
         SpawnPoint point = spawnPointList[pointIndex];
-
-        if (_decalCircle.showDecal == false)
+        if(_decalCircle.showDecal == false)
         {
-            _decalCircle.OpenCircle(point.Position, point.Radius * 2);
+            _decalCircle.OpenCircle(point.Position, point.Radius);
         }
-        Debug.Log($"{point.pointName}ì—ì„œ {sec}ì´ˆí›„ {coinCount}ê°œì˜ ì½”ì¸ì´ ìƒì„±ë©ë‹ˆë‹¤.");
+
+        if(sec <= 1)
+        {
+            _decalCircle.StopBlinkIcon();
+        }
+        MessageSystem.Instance.ShowText($"{point.pointName} : After {sec},  {coinCount} Coin will be generate", 0.8f);
     }
 
     [ClientRpc]
-    private void DecalCircleClientRpc()
+    private void DecalCircleCloseClientRpc()
     {
         _decalCircle.CloseCircle();
     }

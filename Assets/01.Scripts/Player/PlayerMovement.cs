@@ -9,15 +9,16 @@ public class PlayerMovement : NetworkBehaviour
     [SerializeField] private Transform _bodyTrm;
     private Rigidbody2D _rigidbody;
 
-    [Header("Setting Values")] 
-    [SerializeField] private float _movementSpeed = 4f; //ì´ë™ì†ë„
-    [SerializeField] private float _turningSpeed = 30f; //íšŒì „ì†ë„
+    [Header("Setting Values")]
+    [SerializeField] private float _movementSpeed = 4f; //ÀÌµ¿¼Óµµ
+    [SerializeField] private float _turningSpeed = 30f; //È¸Àü¼Óµµ
 
     private Vector2 _movementInput;
 
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
+        
     }
 
     public override void OnNetworkSpawn()
@@ -29,7 +30,7 @@ public class PlayerMovement : NetworkBehaviour
     public override void OnNetworkDespawn()
     {
         if (!IsOwner) return;
-        _playerInput.OnMovementEvent -= HandleMovementEvent;        
+        _playerInput.OnMovementEvent -= HandleMovementEvent;
     }
 
     private void HandleMovementEvent(Vector2 movement)
@@ -37,18 +38,20 @@ public class PlayerMovement : NetworkBehaviour
         _movementInput = movement;
     }
 
+    //Update¿¡¼­´Â Æ÷Å¾À» È¸Àü½ÃÅ³²¨°í-> ´Ï³×°¡
     private void Update()
     {
         if (!IsOwner) return;
-
         float zRotation = _movementInput.x * -_turningSpeed * Time.deltaTime;
-        _bodyTrm.Rotate(0, 0,  zRotation);
+        _bodyTrm.Rotate(0, 0, zRotation);
     }
+    //FixedUpdate¿¡¼­´Â ÀÌµ¿À» ½ÃÅ³²¨¾ß -> °°ÀÌ
 
     private void FixedUpdate()
     {
         if (!IsOwner) return;
-        
+
         _rigidbody.velocity = _bodyTrm.up * (_movementInput.y * _movementSpeed);
     }
+
 }

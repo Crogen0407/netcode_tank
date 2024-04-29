@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using Unity.Netcode;
 using UnityEngine;
-using System;
+using Random = UnityEngine.Random;
 
 public class Health : NetworkBehaviour
 {
-    public NetworkVariable<int> currentHealth = new NetworkVariable<int>();
+    [SerializeField] private ParticleSystem _explosionParticle;
+    public NetworkVariable<int> currentHealth;
     public int maxHealth;
 
     public event Action OnDieEvent;
@@ -16,46 +16,65 @@ public class Health : NetworkBehaviour
 
     private void Awake()
     {
-        
+        currentHealth = new NetworkVariable<int>();
     }
 
     public override void OnNetworkSpawn()
     {
-        //ì£¼ì˜ì‚¬í•­2. NetworkVariableì€ ì„œë²„ë§Œ ê±´ë“œë¦´ ìˆ˜ ìˆë‹¤. í´ë¼ëŠ” ê°’ì˜ ë³€ê²½ì„ ë°›ê¸°ë§Œ
+        //ÁÖÀÇ»çÇ×2 . NetworkVariableÀº ¼­¹ö¸¸ °Çµå¸± ¼ö ÀÖ´Ù. Å¬¶ó´Â °ªÀÇ º¯°æÀ» ¹Ş±â¸¸
         if (IsClient)
         {
             currentHealth.OnValueChanged += HandleHealthValueChanged;
         }
 
         if (IsServer == false) return;
-        currentHealth.Value = maxHealth; //ì²˜ìŒ ì‹œì‘ì‹œ ìµœëŒ€ì²´ë ¥ìœ¼ë¡œ ë„£ì–´ì¤€ë‹¤.
+        currentHealth.Value = maxHealth; //Ã³À½ ½ÃÀÛ½Ã ÃÖ´ëÃ¼·ÂÀ¸·Î ³Ö¾îÁØ´Ù.
     }
 
     public override void OnNetworkDespawn()
     {
+
+        for(int i = 0; i < 4; i++)
+        {
+            Vector2 pos = (Vector2)transform.position 
+                                    + Random.insideUnitCircle;
+            Instantiate(_explosionParticle, pos, Quaternion.identity);
+        }
+
         if (IsClient)
         {
             currentHealth.OnValueChanged -= HandleHealthValueChanged;
         }
+
     }
 
     public float GetNormalizedHealth()
     {
         return (float)currentHealth.Value / maxHealth;
     }
-    
-    private void HandleHealthValueChanged(int previousvalue, int newvalue)
+
+    private void HandleHealthValueChanged(int previousValue, int newValue)
     {
         OnHealthChangedEvent?.Invoke();
+
+        int delta = newValue - previousValue;
+        int value = Mathf.Abs(delta);
+
+        if (value == maxHealth) return; //Ã³À½ ½ÇÇàµÉ ¶§ Ã¼·Â Ã¤¿öÁø°Å 
+
+        Color textColor = delta < 0 ? Color.red : Color.green;
+        TextManager.Instance.PopUpText(
+            value.ToString(), transform.position, textColor);
     }
 
-    //ì´ ë…€ì„ì€ ì„œë²„ë§Œ ì‹¤í–‰í•˜ëŠ” ë§¤ì„œë“œì•¼
+    //ÀÌ³à¼®Àº ¼­¹ö¸¸ ½ÇÇàÇÏ´Â ¸Å¼­µå¾ß
     private void ModifyHealth(int value)
     {
         if (_isDead) return;
+
         currentHealth.Value = Mathf.Clamp(currentHealth.Value + value, 0, maxHealth);
 
-        if (currentHealth.Value == 0)
+        if(currentHealth.Value == 0)
         {
             OnDieEvent?.Invoke();
             _isDead = true;

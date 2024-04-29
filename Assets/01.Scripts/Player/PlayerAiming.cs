@@ -1,6 +1,6 @@
 using Unity.Netcode;
 using UnityEngine;
- 
+
 public class PlayerAiming : NetworkBehaviour
 {
     [SerializeField] private PlayerInput _playerInput;
@@ -9,10 +9,14 @@ public class PlayerAiming : NetworkBehaviour
     private void LateUpdate()
     {
         if (!IsOwner) return;
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(_playerInput.AimPosition);
+        Vector2 mousePos = _playerInput.AimPosition;
 
-        Vector2 direction = (mousePos - (Vector2)_turretTrm.position).normalized;
-        
-        _turretTrm.up = direction;
+        Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
+        Vector3 dir = (worldMousePos - transform.position).normalized;
+
+        //float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg - 90f;
+        //_turretTrm.rotation = Quaternion.Euler(0, 0, angle);
+
+        _turretTrm.up = new Vector2(dir.x, dir.y);
     }
 }

@@ -4,11 +4,13 @@ public class ApplicationController : MonoBehaviour
 {
     [SerializeField] private ClientSingleton _clientPrefab;
     [SerializeField] private HostSingleton _hostPrefab;
-    
+
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+
         bool isDedicated = SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null;
+
         LaunchInMode(isDedicated);
     }
 
@@ -26,17 +28,18 @@ public class ApplicationController : MonoBehaviour
             ClientSingleton clientSingleton = Instantiate(_clientPrefab, transform);
             bool authenticated = await clientSingleton.CreateClient();
 
-            if (authenticated)
+            if(authenticated)
             {
-                //ì—¬ê¸°ì— ì–´ë“œë ˆì„œë¸”ì„ ë¹„ë¡¯í•œ ì—ì…‹ë“¤ì„ ë¡œë”©í•˜ëŠ” ì½”ë“œê°€ ë“¤ì–´ê°€ì•¼í•˜ê³ 
-                //ê¸°íƒ€ë“±ë“± ê²Œì„ í´ë¼ì´ì–¸íŠ¸ ì¤€ë¹„ì‘ì—…
-                //ë¡œë”©ì´ ëª¨ë‘ ì™„ë£Œë˜ì—ˆìœ¼ë©´ ë©”ë‰´ì”¬ìœ¼ë¡œ ì´ë™í•œë‹¤.
+                //¿©±â¿¡ ¾îµå·¹¼­ºíÀ» ºñ·ÔÇÑ ¿¡¼ÂµéÀ» ·ÎµùÇÏ´Â ÄÚµå°¡ µé¾î°¡¾ßÇÏ°í
+                //±âÅ¸µîµî °ÔÀÓ Å¬¶óÀÌ¾ğÆ® ÁØºñÀÛ¾÷
+                //·ÎµùÀÌ ¸ğµÎ ¿Ï·áµÇ¾úÀ¸¸é ¸Ş´º¾ÀÀ¸·Î ÀÌµ¿ÇÑ´Ù.
                 ClientSingleton.Instance.GameManager.GotoMenuScene();
             }
             else
             {
-                Debug.LogError("UGS service login failed");
+                Debug.LogError("UGS Service login failed");
             }
+
             
         }
     }

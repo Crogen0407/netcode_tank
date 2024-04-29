@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: DecalMat
-  m_Shader: {fileID: -6465566751694194690, guid: 3b179c656a6103944ac03bb7b5e8fd51, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: e70b03a8124782445bb42ff5c4eec3e8, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -41,14 +41,14 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _LineWidth: 0.05
-    - _Radius: 0.5
-    - _ShineWidth: 0.286
+    - _LineWidth: 0.0903
+    - _Radius: 1
+    - _ShineWidth: 0.149
     m_Colors:
-    - _EdgeColor: {r: 7.999999, g: 4.8500824, b: 0, a: 1}
-    - _GlowColor: {r: 3.9999998, g: 3.9999998, b: 3.9999998, a: 1}
+    - _EdgeColor: {r: 8, g: 7.456374, b: 0, a: 0}
+    - _GlowColor: {r: 32, g: 32, b: 32, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &4677403361872277463
+--- !u!114 &8536990087699536778
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

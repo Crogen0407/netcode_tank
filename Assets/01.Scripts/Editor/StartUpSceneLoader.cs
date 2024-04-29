@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEngine;
 
 [InitializeOnLoad]
 public static class StartUpSceneLoader
@@ -14,16 +12,16 @@ public static class StartUpSceneLoader
 
     private static void LoadStartUpScene(PlayModeStateChange state)
     {
-        //ì‹¤í–‰ë²„íŠ¼ì„ ëˆ„ë¥¸ ìˆœê°„
-        if (state == PlayModeStateChange.EnteredEditMode)
+        //½ÇÇà¹öÆ°À» ´©¸¥ ¼ø°£.
+        if(state == PlayModeStateChange.ExitingEditMode)
         {
-            //í˜„ì¬ ìˆ˜ì •ëœ ì”¬ì— ìˆë‹¤ë©´ ìœ ì €ì—ê²Œ ì €ì¥í• ì§€ ëª°ì–´ë´ë¼
+            //ÇöÀç ¼öÁ¤µÈ ¾À¿¡ ÀÖ´Ù¸é À¯Àú¿¡°Ô ÀúÀåÇÒÁö ¹°¾îºÁ¶ó.
             EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
         }
 
-        if (state == PlayModeStateChange.EnteredPlayMode)
+        if(state == PlayModeStateChange.EnteredPlayMode)
         {
-            if (EditorSceneManager.GetActiveScene().buildIndex != 0)
+            if(EditorSceneManager.GetActiveScene().buildIndex != 0)
             {
                 EditorSceneManager.LoadScene(0);
             }

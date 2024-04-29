@@ -31,7 +31,8 @@ public class LobbyPanelUI : MonoBehaviour
 
     private void Start()
     {
-        _rectTrm.anchoredPosition = new Vector2(0, 2000);
+        //float screenHeight = Screen.height;
+        _rectTrm.anchoredPosition = new Vector2(0, 2000f);
     }
 
     public void OpenWindow()
@@ -75,15 +76,15 @@ public class LobbyPanelUI : MonoBehaviour
                 new QueryFilter(
                     field: QueryFilter.FieldOptions.IsLocked,
                     value:"0",
-                    op:QueryFilter.OpOptions.EQ)  //ë½ì´ 0ì¸ ì• ë“¤  
+                    op:QueryFilter.OpOptions.EQ)  //¶ôÀÌ 0ÀÎ ¾Öµé  
             };
 
             QueryResponse lobbies = 
                         await Lobbies.Instance.QueryLobbiesAsync(options);
 
-            //ê¸°ì¡´ ë¡œë¹„ë¥¼ ë‹¤ ì§€ìš°ê³ 
+            //±âÁ¸ ·Îºñ¸¦ ´Ù Áö¿ì°í
             ClearLobbies();
-            // ìƒˆë¡œìš´ ë¡œë¹„ë¡œ ìƒì„±í•´ì¤€ë‹¤.
+            // »õ·Î¿î ·Îºñ·Î »ı¼ºÇØÁØ´Ù.
             foreach(Lobby lobby in lobbies.Results)
             {
                 CreateLobbyUI(lobby);
@@ -110,7 +111,7 @@ public class LobbyPanelUI : MonoBehaviour
     {
         LobbyUI ui = Instantiate(_lobbyUIPrefab, _scrollRect.content);
 
-        //ì—¬ê¸°ì— ë¡œë¹„ ì •ë³´ ì…‹íŒ…ë¶€ë¶„ì´ ë“¤ì–´ê°ˆ ì˜ˆì •
+        //¿©±â¿¡ ·Îºñ Á¤º¸ ¼ÂÆÃºÎºĞÀÌ µé¾î°¥ ¿¹Á¤
         ui.SetRoomTemplate(lobby);
 
         _lobbyUIList.Add(ui);

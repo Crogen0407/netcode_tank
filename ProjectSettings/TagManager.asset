@@ -8,13 +8,13 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Sun
   - Water
   - UI
   - Projectile
   - PickUp
   - Obstacle
-  - 
+  - Minimap
   - 
   - 
   - 
@@ -39,20 +39,20 @@ TagManager:
   - 
   m_SortingLayers:
   - name: Background
-    uniqueID: 194763683
+    uniqueID: 582179395
     locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Terrain
-    uniqueID: 1886943219
+    uniqueID: 1925458875
     locked: 0
   - name: Coin
-    uniqueID: 763939213
+    uniqueID: 1290837275
     locked: 0
   - name: Player
-    uniqueID: 1727025937
+    uniqueID: 3897345943
     locked: 0
   - name: UI
-    uniqueID: 924570659
+    uniqueID: 1699628799
     locked: 0

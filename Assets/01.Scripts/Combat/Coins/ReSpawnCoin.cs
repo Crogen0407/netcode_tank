@@ -1,15 +1,20 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ReSpawnCoin : Coin
 {
+
     public event Action<ReSpawnCoin> OnCollected;
+
     private Vector3 _prevPos;
+
     public override int Collect()
     {
         if (_alreadyCollected) return 0;
 
-        if (!IsServer)
+        if(!IsServer)
         {
             SetVisible(false);
             return 0;
@@ -17,21 +22,18 @@ public class ReSpawnCoin : Coin
 
         _alreadyCollected = true;
         OnCollected?.Invoke(this);
-        isActive.Value = false; //ì½”ì¸ì„ êº¼ì¤€ë‹¤.
+        isActive.Value = false; //ÄÚÀÎÀ» ²¨ÁØ´Ù.
 
         return _coinValue;
-
     }
 
-    //ì„œë²„ë§Œ ì‹¤í–‰í•˜ëŠ” í•¨ìˆ˜. í´ë¼ëŠ” ì´ê±° ì•ˆì‹¤í–‰í•´
-    [ContextMenu("ResetCoins")]
+    //¼­¹ö¸¸ ½ÇÇàÇÏ´Â ÇÔ¼ö. Å¬¶ó´Â ÀÌ°Å ¾È½ÇÇàÇØ
+    [ContextMenu("ResetCoin")]
     public void ResetCoin()
     {
         _alreadyCollected = false;
-        isActive.Value = true; //ë„¤íŠ¸ì›Œí¬ ë³€ìˆ˜ë¥¼ trueë¡œ ì„¤ì •í•´ì£¼ëŠ” ê±°ì§€
+        isActive.Value = true; //³×Æ®¿öÅ© º¯¼ö¸¦ true·Î ¼³Á¤ÇØÁÖ´Â°ÅÁö
         SetVisible(true);
-
-        //transform.position = new Vector3(0, 0, 0);
     }
 
     public override void OnNetworkSpawn()
@@ -39,26 +41,27 @@ public class ReSpawnCoin : Coin
         base.OnNetworkSpawn();
         _prevPos = transform.position;
 
-        // if(IsClient)
-        //     isActive.OnValueChanged += HandleActiveValueChanged;
+        //if(IsClient)
+        //    isActive.OnValueChanged += HandleActiveValueChanged;
     }
 
     public override void OnNetworkDespawn()
     {
         base.OnNetworkDespawn();
-        // if(IsClient)
-        //     isActive.OnValueChanged -= HandleActiveValueChanged;
+        //if(IsClient)
+        //    isActive.OnValueChanged -= HandleActiveValueChanged;
     }
 
-    // private void HandleActiveValueChanged(bool previousvalue, bool newvalue)
-    // {
-    // }
+    //private void HandleActiveValueChanged(bool previousValue, bool newValue)
+    //{
+    //    SetVisible(newValue);
+    //}
 
     private void Update()
     {
         if (IsServer) return;
 
-        if (Vector2.Distance(_prevPos, transform.position) > 0.1f)
+        if(Vector2.Distance(_prevPos, transform.position) > 0.1f)
         {
             _prevPos = transform.position;
             SetVisible(true);

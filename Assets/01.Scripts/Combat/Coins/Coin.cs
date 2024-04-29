@@ -5,7 +5,6 @@ using UnityEngine;
 public abstract class Coin : NetworkBehaviour
 {
     protected SpriteRenderer _spriteRenderer;
-
     protected CircleCollider2D _collider2D;
     protected int _coinValue = 10;
     protected bool _alreadyCollected;
@@ -13,21 +12,20 @@ public abstract class Coin : NetworkBehaviour
     protected readonly int _viewOffsetHash = Shader.PropertyToID("_ViewOffset");
 
     public NetworkVariable<bool> isActive;
-    protected Tween _viewTween = null;
 
+    protected Tween _viewTween = null;
     public abstract int Collect();
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         isActive = new NetworkVariable<bool>();
-
         _spriteRenderer = GetComponent<SpriteRenderer>();
         _collider2D = GetComponent<CircleCollider2D>();
     }
 
     public override void OnNetworkSpawn()
     {
-        if (IsClient)
+        if(IsClient)
         {
             SetVisible(isActive.Value);
         }
@@ -38,7 +36,7 @@ public abstract class Coin : NetworkBehaviour
         _collider2D.enabled = value;
         _spriteRenderer.enabled = value;
 
-        if(value)  // ì§€ê¸ˆ ë‹¤ì‹œ ì½”ì¸ì„ ì¼œì£¼ë¼ê³  í•œê±°
+        if(value)  // Áö±Ý ´Ù½Ã ÄÚÀÎÀ» ÄÑÁÖ¶ó°í ÇÑ°Å
         {
             if(_viewTween != null && _viewTween.IsActive())
             {
@@ -46,15 +44,15 @@ public abstract class Coin : NetworkBehaviour
             }
 
             Material mat = _spriteRenderer.material;
-            mat.SetFloat(_viewOffsetHash, 0); //0ë¶€í„° ì‹œìž‘
+            mat.SetFloat(_viewOffsetHash, 0); //0ºÎÅÍ ½ÃÀÛ
             float coinVisibleTime = 1.5f;
 
-            // _viewTween = DOTween.To(
-            //     () => mat.GetFloat(_viewOffsetHash),
-            //     value => mat.SetFloat(_viewOffsetHash, value),
-            //     1.1f, coinVisibleTime);
-            
-            mat.DOFloat(1.1f, _viewOffsetHash, coinVisibleTime);
+            _viewTween = mat.DOFloat(1.1f, _viewOffsetHash, coinVisibleTime);
+
+            //_viewTween = DOTween.To(
+            //    () => mat.GetFloat(_viewOffsetHash),
+            //    value => mat.SetFloat(_viewOffsetHash, value),
+            //    1.1f, coinVisibleTime);
         }
     }
 

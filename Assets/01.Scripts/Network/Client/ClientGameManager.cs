@@ -16,24 +16,22 @@ public class ClientGameManager : IDisposable
     private JoinAllocation _allocation;
     private string _playerName;
     public string PlayerName => _playerName;
-    
+
     public NetworkClient NetClient { get; private set; }
-    
+
     public async Task<bool> InitAsync()
     {
-        //UGS ì„œë¹„ìŠ¤ ì¸ì¦íŒŒíŠ¸ê°€ ë“¤ì–´ê°ˆ ì˜ˆì •ì…ë‹ˆë‹¤.
-        await UnityServices.InitializeAsync(); //ì´ˆê¸°í™”
+        //¿©±â¿¡ UGS¼­ºñ½º ÀÎÁõÆÄÆ®°¡ µé¾î°¥ ¿¹Á¤ÀÔ´Ï´Ù.
+        await UnityServices.InitializeAsync(); //ÃÊ±âÈ­
 
         NetClient = new NetworkClient(NetworkManager.Singleton);
-        
 
-        AuthState authState = await UGSAuthWrapper.DoAuth(); //ì¸ì¦ì´ 5íšŒ ì§„í–‰ë ê±°ê³ 
+        AuthState authState = await UGSAuthWrapper.DoAuth(); //ÀÎÁõÀÌ 5È¸ ÁøÇàµÉ²¨°í
 
-        if (authState == AuthState.Authenticated)
+        if(authState == AuthState.Authenticated)
         {
             return true;
         }
-
         return false;
     }
 
@@ -53,16 +51,15 @@ public class ClientGameManager : IDisposable
             transport.SetRelayServerData(relayServerData);
 
             SetPayloadData();
-            
+
             NetworkManager.Singleton.StartClient();
-        }
-        catch (Exception e)
+        }catch (Exception e)
         {
             Debug.LogError(e);
             return;
         }
     }
-    
+
     public bool StartClientLocalNetwork()
     {
         SetPayloadData();
@@ -74,24 +71,24 @@ public class ClientGameManager : IDisposable
         return true;
     }
 
-    public void SetPlayerName(string text)
+    public void SetPlayerName(string playerName)
     {
-        _playerName = text;
+        _playerName = playerName;
     }
 
-    //ìš”ì²­í—¤ë”ì— ì‚¬ìš©ì ì •ë³´ ì €ì¥í•˜ê¸°
+    //¿äÃ»Çì´õ¿¡ »ç¿ëÀÚ Á¤º¸ ÀúÀåÇÏ±â
     public void SetPayloadData()
     {
         UserData userData = new UserData()
         {
             username = _playerName,
-            userAuthID = AuthenticationService.Instance.PlayerId //UGSì— ë“±ë¡ëœ ì•„ì´ë””.
+            userAuthID = AuthenticationService.Instance.PlayerId  //UGS¿¡ µî·ÏµÈ ¾ÆÀÌµğ.
         };
-
+        
         string json = JsonUtility.ToJson(userData);
         byte[] payload = Encoding.UTF8.GetBytes(json);
-        
-        //ì ‘ì† ì‹œ ë°ì´í„° ì‹¤ì–´ì£¼ëŠ” ê²ƒ
+
+        //Á¢¼Ó½Ã µ¥ÀÌÅÍ ½Ç¾îÁÖ´Â°Í
         NetworkManager.Singleton.NetworkConfig.ConnectionData = payload;
     }
 
@@ -102,6 +99,8 @@ public class ClientGameManager : IDisposable
 
     public void Disconnect()
     {
-        NetClient?.Disconnect();
+        NetClient?.Dispose();
+
+        SceneManager.LoadScene(SceneNames.MenuScene);
     }
 }

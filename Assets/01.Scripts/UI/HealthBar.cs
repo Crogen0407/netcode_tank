@@ -1,11 +1,9 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthBar : MonoBehaviour
 {
-    [Header("Reference")] 
+    [Header("Reference")]
     [SerializeField] private Transform _barTrm;
     [SerializeField] private Health _ownerHealth;
 

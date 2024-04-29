@@ -2,25 +2,22 @@ using UnityEngine;
 
 public class HostSingleton : MonoBehaviour
 {
-    private static HostSingleton _instance;
-
+    private static HostSingleton instance;
     public static HostSingleton Instance
     {
         get
         {
-            if (_instance != null) return _instance;
+            if (instance != null) return instance;
+            instance = FindObjectOfType<HostSingleton>();
 
-            _instance = FindObjectOfType<HostSingleton>();
-
-            if (_instance == null)
+            if (instance == null)
             {
                 Debug.LogError("No host singleton");
             }
-
-            return _instance;
+            return instance;
         }
     }
-    
+
     public HostGameManager GameManager { get; set; }
 
     public void CreateHost()

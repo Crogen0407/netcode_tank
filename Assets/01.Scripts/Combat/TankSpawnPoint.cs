@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 public class TankSpawnPoint : MonoBehaviour
 {
@@ -15,6 +12,7 @@ public class TankSpawnPoint : MonoBehaviour
         int randIndex = Random.Range(0, _spawnPoints.Count);
         return _spawnPoints[randIndex].transform.position;
     }
+
 
     private void OnEnable()
     {

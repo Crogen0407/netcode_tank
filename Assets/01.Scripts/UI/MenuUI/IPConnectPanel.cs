@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Net;
 using System.Text.RegularExpressions;
 using TMPro;
@@ -17,7 +20,8 @@ public class IPConnectPanel : MonoBehaviour
         _hostBtn.onClick.AddListener(HandleHostBtnClick);
         _clientBtn.onClick.AddListener(HandleClientBtnClick);
 
-        _ipText.text = FindIPAddress();
+        //_ipText.text = FindIPAddress();
+        _ipText.text = "";
         _portText.text = "7777";
 
         if(NetworkManager.Singleton != null)
@@ -27,14 +31,13 @@ public class IPConnectPanel : MonoBehaviour
     private void OnDestroy()
     {
         if (NetworkManager.Singleton == null) return;
-
-        NetworkManager.Singleton.OnClientDisconnectCallback -= 
-            HandleClientDisconnect;
+        
+        NetworkManager.Singleton.OnClientDisconnectCallback -= HandleClientDisconnect;
     }
 
     private void HandleClientDisconnect(ulong clientID)
     {
-        Debug.Log(clientID + ", ì—ëŸ¬ ë°œìƒ");
+        Debug.Log(clientID + ", ¿¡·¯ ¹ß»ı");
     }
 
     private string FindIPAddress()
@@ -67,10 +70,7 @@ public class IPConnectPanel : MonoBehaviour
     private void HandleClientBtnClick()
     {
         if (SetupNetworkPassport() == false) return;
-        if(ClientSingleton.Instance.GameManager.StartClientLocalNetwork() == false)
-        {
-            NetworkManager.Singleton.Shutdown();
-        }
+        ClientSingleton.Instance.GameManager.StartClientLocalNetwork();
     }
 
     private bool SetupNetworkPassport()
@@ -86,7 +86,7 @@ public class IPConnectPanel : MonoBehaviour
 
         if(portMatch.Success == false || ipMatch.Success == false)
         {
-            Debug.Log("ì˜¬ë°”ë¥´ì§€ ëª»í•œ ì•„ì´í”¼ ë˜ëŠ” í¬íŠ¸ ë²ˆí˜¸ì…ë‹ˆë‹¤.");
+            Debug.Log("¿Ã¹Ù¸£Áö ¸øÇÑ ¾ÆÀÌÇÇ ¶Ç´Â Æ÷Æ® ¹øÈ£ÀÔ´Ï´Ù.");
             return false;
         }
 

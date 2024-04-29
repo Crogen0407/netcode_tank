@@ -5,7 +5,7 @@ public abstract class Feedback : MonoBehaviour
     public abstract void CreateFeedback();
     public abstract void CompleteFeedback();
 
-    protected void OnDestroy()
+    protected virtual void OnDestroy()
     {
         CompleteFeedback();
     }

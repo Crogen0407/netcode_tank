@@ -15,26 +15,26 @@ public class NetworkClient : IDisposable
     private void HandleClientDisconnect(ulong clientID)
     {
         if (clientID != 0 && clientID != _networkManager.LocalClientId) return;
-        
+
         Disconnect();
     }
 
     public void Disconnect()
     {
-        if (SceneManager.GetActiveScene().name != SceneNames.MenuScene)
+        if(SceneManager.GetActiveScene().name != SceneNames.MenuScene)
         {
             SceneManager.LoadScene(SceneNames.MenuScene);
         }
 
-        if (_networkManager.IsConnectedClient)
+        if(_networkManager.IsConnectedClient)
         {
-            _networkManager.Shutdown(); //ê°•ì œ ì¢…ë£Œ
+            _networkManager.Shutdown(); //°­Á¦ Á¾·á
         }
     }
 
     public void Dispose()
     {
-        if (_networkManager != null)
+        if(_networkManager != null)
         {
             _networkManager.OnClientDisconnectCallback -= HandleClientDisconnect;
         }

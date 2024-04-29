@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerVisual : MonoBehaviour
@@ -8,7 +6,9 @@ public class PlayerVisual : MonoBehaviour
 
     public void SetTintColor(Color color)
     {
-        foreach (SpriteRenderer sr in sprites)
+        //sprites.ToList().ForEach(sr => sr.color = color);
+
+        foreach(SpriteRenderer sr in sprites)
         {
             sr.color = color;
         }

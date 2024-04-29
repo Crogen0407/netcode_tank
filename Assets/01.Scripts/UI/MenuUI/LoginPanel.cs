@@ -1,8 +1,8 @@
+using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,11 +16,11 @@ public class LoginPanel : MonoBehaviour
     private void Awake()
     {
         _btnLogin.interactable = false;
-        _btnLogin.onClick.AddListener(HandleLogicBtnClick);
+        _btnLogin.onClick.AddListener(HandleLoginBtnClick);
         _inputName.onValueChanged.AddListener(ValidateUsername);
     }
 
-    private void HandleLogicBtnClick()
+    private void HandleLoginBtnClick()
     {
         ClientSingleton.Instance.GameManager.SetPlayerName(_inputName.text);
         _canvasGroup.DOFade(0, 0.3f).OnComplete(() =>
@@ -32,8 +32,9 @@ public class LoginPanel : MonoBehaviour
 
     private void ValidateUsername(string name)
     {
-        Regex regex = new Regex(@"^[a-zA-Z0-9]{3,7}$");
+        Regex regex = new Regex(@"^[a-zA-Z0-9]{3,5}$");
         bool success = regex.IsMatch(name);
+
         _btnLogin.interactable = success;
     }
 }

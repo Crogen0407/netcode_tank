@@ -48,7 +48,7 @@ public class UGSAuthWrapper
 
     private static async Task SignInAnonymouslyAsync(int maxTries)
     {
-        State = AuthState.Authenticating; //ì¸ì¦ì‘ì—… ì‹œì‘
+        State = AuthState.Authenticating; //ÀÎÁõÀÛ¾÷ ½ÃÀÛ
 
         int tries = 0;
         while (State == AuthState.Authenticating && tries < maxTries)
@@ -75,7 +75,7 @@ public class UGSAuthWrapper
 
             tries++;
 
-            await Task.Delay(1000); //1ì´ˆ ê¸°ë‹¤ë ¸ë‹¤ê°€ ë‹¤ì‹œ ì‹œë„
+            await Task.Delay(1000); //1ÃÊ ±â´Ù·È´Ù°¡ ´Ù½Ã ½Ãµµ
         }
 
         if(State != AuthState.Authenticated)
