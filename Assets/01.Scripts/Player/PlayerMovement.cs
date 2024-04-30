@@ -7,18 +7,24 @@ public class PlayerMovement : NetworkBehaviour
     [Header("References")]
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private Transform _bodyTrm;
+    [SerializeField] private ParticleSystem _dustEffect;
     private Rigidbody2D _rigidbody;
 
     [Header("Setting Values")]
-    [SerializeField] private float _movementSpeed = 4f; //ÀÌµ¿¼Óµµ
-    [SerializeField] private float _turningSpeed = 30f; //È¸Àü¼Óµµ
+    [SerializeField] private float _movementSpeed = 4f; //ï¿½Ìµï¿½ï¿½Óµï¿½
+    [SerializeField] private float _turningSpeed = 30f; //È¸ï¿½ï¿½ï¿½Óµï¿½
 
     private Vector2 _movementInput;
 
+    [SerializeField] private float _dustEmissionValue = 10;
+    private ParticleSystem.EmissionModule _emissionModule;
+    private Vector3 _prevPos;
+    private float _particleStopThreshold = 0.005f;
+    
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
-        
+        _emissionModule = _dustEffect.emission;
     }
 
     public override void OnNetworkSpawn()
@@ -38,17 +44,29 @@ public class PlayerMovement : NetworkBehaviour
         _movementInput = movement;
     }
 
-    //Update¿¡¼­´Â Æ÷Å¾À» È¸Àü½ÃÅ³²¨°í-> ´Ï³×°¡
+    //Updateï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¾ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½Å³ï¿½ï¿½ï¿½ï¿½-> ï¿½Ï³×°ï¿½
     private void Update()
     {
         if (!IsOwner) return;
         float zRotation = _movementInput.x * -_turningSpeed * Time.deltaTime;
         _bodyTrm.Rotate(0, 0, zRotation);
     }
-    //FixedUpdate¿¡¼­´Â ÀÌµ¿À» ½ÃÅ³²¨¾ß -> °°ÀÌ
+    //FixedUpdateï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½ï¿½ï¿½ ï¿½ï¿½Å³ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½
 
     private void FixedUpdate()
     {
+        float moveDistance = (transform.position - _prevPos).sqrMagnitude;
+        if (moveDistance > _particleStopThreshold)
+        {
+            _emissionModule.rateOverTime = _dustEmissionValue;
+        }
+        else
+        {
+            _emissionModule.rateOverTime = 0;
+        }
+
+        _prevPos = transform.position;
+        
         if (!IsOwner) return;
 
         _rigidbody.velocity = _bodyTrm.up * (_movementInput.y * _movementSpeed);

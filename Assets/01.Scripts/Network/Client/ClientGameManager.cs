@@ -99,8 +99,6 @@ public class ClientGameManager : IDisposable
 
     public void Disconnect()
     {
-        NetClient?.Dispose();
-
-        SceneManager.LoadScene(SceneNames.MenuScene);
+        NetClient?.Disconnect();
     }
 }

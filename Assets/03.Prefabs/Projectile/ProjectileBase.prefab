@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 1215043313073558845}
   - component: {fileID: 8495567833065214826}
   - component: {fileID: 1635736806337012510}
-  - component: {fileID: 5574755703770290445}
-  - component: {fileID: 1806709319632066972}
+  - component: {fileID: 3397089453728684358}
   m_Layer: 6
   m_Name: ProjectileBase
   m_TagString: Untagged
@@ -97,7 +96,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!114 &5574755703770290445
+--- !u!114 &3397089453728684358
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,19 +105,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6382288869064949929}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e2c29ed0faff0042987962ab89f2dc2, type: 3}
+  m_Script: {fileID: 11500000, guid: 66c0cf76a407a2d41850a45c752cf882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1806709319632066972
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6382288869064949929}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9fe129f51527fc74ea5ccc0179ce0692, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  isServerProjectile: 0
+  _damage: 10
+  _destroyObj: {fileID: 5239028399345891592, guid: 5f5e5ff78aa89d74dbf951a5463da285, type: 3}
   _lifetime: 2

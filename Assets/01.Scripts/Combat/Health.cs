@@ -81,8 +81,20 @@ public class Health : NetworkBehaviour
         }
     }
 
+    [ClientRpc]
+    public void ShowTextClientRpc(string text, Color color)
+    {
+        TextManager.Instance.PopUpText(text, transform.position, color);
+    }
+    
     public void TakeDamage(int damageValue)
     {
+        if (MapManager.Instance.IsInSafetyZone(transform.position))
+        {
+            ShowTextClientRpc("¹«Àû", Color.white);
+            return;
+        }
+        
         ModifyHealth(-damageValue);
     }
 

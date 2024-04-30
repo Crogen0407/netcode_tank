@@ -48,6 +48,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3397089453728684358, guid: f33165251b0528a429b99de6ebcdbb7b, type: 3}
+      propertyPath: _destroyObj
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3397089453728684358, guid: f33165251b0528a429b99de6ebcdbb7b, type: 3}
+      propertyPath: isServerProjectile
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6382288869064949929, guid: f33165251b0528a429b99de6ebcdbb7b, type: 3}
       propertyPath: m_Name
       value: ServerProjectile
@@ -55,26 +63,5 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6382288869064949929, guid: f33165251b0528a429b99de6ebcdbb7b, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8719651841068621219}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f33165251b0528a429b99de6ebcdbb7b, type: 3}
---- !u!1 &6411319680218070839 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6382288869064949929, guid: f33165251b0528a429b99de6ebcdbb7b, type: 3}
-  m_PrefabInstance: {fileID: 30369260871466910}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &8719651841068621219
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6411319680218070839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e23379da62463424cae9c21c1e7edcc3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _damage: 10

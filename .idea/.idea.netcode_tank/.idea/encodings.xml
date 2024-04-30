@@ -2,5 +2,11 @@
 <project version="4">
   <component name="Encoding" addBOMForNewFiles="with BOM under Windows, with no BOM otherwise">
     <file url="file://$PROJECT_DIR$/Assets/01.Scripts/Combat/Health.cs" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/Assets/01.Scripts/Combat/ProjectileLauncher.cs" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/Assets/01.Scripts/Manager/MapManager.cs" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/Assets/01.Scripts/Network/Client/ClientGameManager.cs" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/Assets/01.Scripts/Network/Server/NetworkServer.cs" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/Assets/01.Scripts/Player/PlayerController.cs" charset="x-windows-949" />
+    <file url="file://$PROJECT_DIR$/Assets/01.Scripts/UI/MenuUI/LobbyUI.cs" charset="x-windows-949" />
   </component>
 </project>
